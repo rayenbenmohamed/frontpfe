@@ -20,7 +20,8 @@ export class LoginComponent {
         const etudiantId = response.etudiantId;
         this.moduleService.getModulesByEtudiantId(etudiantId).subscribe( modules => {
             this.modules = modules;
-            this.router.navigate(['/modules']);
+            this.router.navigateByUrl('/home');
+
           },
           error => {
             console.error('Erreur lors de la récupération des modules de l\'étudiant :', error);
