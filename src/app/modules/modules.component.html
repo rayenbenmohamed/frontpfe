@@ -1,0 +1,20 @@
+<!-- module.component.html -->
+
+<div class="container">
+    <h1>Liste des modules</h1>
+    <div *ngIf="modules.length > 0; else noModules">
+      <div *ngFor="let module of modules">
+        <div class="card mb-3">
+          <div class="card-body">
+            <h5 class="card-title">{{ module.nomModule }}</h5>
+            
+            <!-- Ajoutez d'autres détails du module ici -->
+          </div>
+        </div>
+      </div>
+    </div>
+    <ng-template #noModules>
+      <p>Aucun module disponible pour le moment.</p>
+    </ng-template>
+  </div>
+  
