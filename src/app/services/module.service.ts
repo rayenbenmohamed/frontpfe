@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { Module } from '../model/module';
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +11,16 @@ export class ModuleService {
   private baseUrl = 'http://localhost:3001/api'; // Mettez l'URL de votre API Node.js
 
   constructor(private http: HttpClient) { }
+  getModules(): Observable<any[]> {
+    // Récupérer le token du localStorage
+    const token = localStorage.getItem('token');
+
+    // Créer les en-têtes HTTP, incluant l'en-tête 'Authorization' avec le token
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+
+    // Effectuer la requête GET avec les en-têtes inclus
+    return this.http.get<any[]>(`${this.baseUrl}/modules`, { headers });
+  }
 
   getAllModules(): Observable<any[]> {
     return this.http.get<any[]>(`${this.baseUrl}/modules`);

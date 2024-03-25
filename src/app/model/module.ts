@@ -1,9 +1,14 @@
+import { Emploi } from "./emploi";
+import { Enseignant } from "./enseignant";
+import { Etudiant } from "./etudiant";
+import { Formation } from "./formation";
+
 export interface Module {
     _id: string; // Identifiant MongoDB généré automatiquement
     nomModule: string;
-    etudiants: string[]; // Tableau d'identifiants d'objets Étudiant
-    enseignant: string; // Identifiant d'objet Enseignant
-    formations: string; // Identifiant d'objet Formation
-    emplois: string; // Identifiant d'objet Emploi
+    etudiants: Etudiant; // Tableau d'identifiants d'objets Étudiant
+    enseignant: Enseignant; // Identifiant d'objet Enseignant
+    formations: Formation; // Identifiant d'objet Formation
+    emplois: Emploi; // Identifiant d'objet Emploi
   }
   

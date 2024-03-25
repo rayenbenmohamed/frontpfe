@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Module } from '../model/module'; // Assurez-vous d'importer correctement votre modèle de module
-import { ModuleService } from '../services/module.service';
+import { ModuleService } from '../services/module.service'; // Assurez-vous que le chemin d'accès est correct
 
 @Component({
   selector: 'app-modules',
@@ -8,22 +7,41 @@ import { ModuleService } from '../services/module.service';
   styleUrls: ['./modules.component.css']
 })
 export class ModulesComponent implements OnInit {
-  modules: Module[] = []; // Déclarez la propriété modules et initialisez-la avec un tableau vide
+
+  modules: any[] = [];
+  module: any;
 
   constructor(private moduleService: ModuleService) { }
 
   ngOnInit(): void {
-    this.fetchModules(); // Appeler la méthode pour récupérer les modules lors de l'initialisation du composant
+    this.getAllModules();
   }
-
-  fetchModules(): void {
-    this.moduleService.getAllModules().subscribe(
-      modules => {
-        this.modules = modules; // Affecter les modules récupérés au tableau modules
+  loadModules(): void {
+    this.moduleService.getModules().subscribe(
+      (modules) => {
+        this.modules = modules;
       },
-      error => {
-        console.error('Erreur lors de la récupération des modules :', error);
+      (error) => {
+        console.error('Erreur lors de la récupération des modules', error);
       }
     );
+  }
+  
+  getAllModules(): void {
+    this.moduleService.getAllModules().subscribe({
+      next: (data) => {
+        this.modules = data;
+      },
+      error: (e) => console.error(e)
+    });
+  }
+
+  getModuleById(id: string): void {
+    this.moduleService.getModuleById(id).subscribe({
+      next: (data) => {
+        this.module = data;
+      },
+      error: (e) => console.error(e)
+    });
   }
 }

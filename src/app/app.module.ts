@@ -18,13 +18,16 @@ import { LoginComponent } from './login/login.component';
 import { LogoutComponent } from './logout/logout.component';
 import { AuthService } from './auth.service';
 import { ModulesComponent } from './modules/modules.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { FormationComponent } from './formation/formation.component';
 import { EtudiantComponent } from './etudiant/etudiant.component';
 import { EnseignantComponent } from './enseignant/enseignant.component';
 import { CategorieComponent } from './categorie/categorie.component';
 import { EmploiComponent } from './emploi/emploi.component';
 import { CompteComponent } from './compte/compte.component';
+import { FormsModule } from '@angular/forms';
+import { RegisterComponent } from './register/register.component';
+import { AuthInterceptor } from './auth.interceptor';
 
 
 
@@ -50,16 +53,20 @@ import { CompteComponent } from './compte/compte.component';
     CategorieComponent,
     EmploiComponent,
     CompteComponent,
+    RegisterComponent,
 
 
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
 
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule { }

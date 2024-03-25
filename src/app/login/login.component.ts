@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
-import { LoginService } from './services/login.service';
-import { ModuleService } from '../services/module.service';
-import { Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router'; // Import du Router
+import { AuthService } from '../auth.service';
+import { Compte } from '../model/compte';
 
 @Component({
   selector: 'app-login',
@@ -10,27 +9,48 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-  modules: any[] = [];
+  username: string = ''; // Ajoutez un type explicite et une valeur par défaut
+  password: string = ''; // Ajoutez un type explicite et une valeur par défaut
+  newUsername: string = ''; // Ajoutez le champ de nouvel utilisateur
+  newPassword: string = ''; 
+  constructor(
+    private authService: AuthService,
+    private router: Router // Injection du Router
+  ) {}
 
-  constructor(private loginService: LoginService, private moduleService: ModuleService, private router: Router, private http: HttpClient) { }
-
-  login(username: string, password: string): void {
-    this.loginService.login(username, password).subscribe(
-      response => {
-        const etudiantId = response.etudiantId;
-        this.moduleService.getModulesByEtudiantId(etudiantId).subscribe( modules => {
-            this.modules = modules;
-            this.router.navigateByUrl('/home');
-
-          },
-          error => {
-            console.error('Erreur lors de la récupération des modules de l\'étudiant :', error);
+  login(): void {
+    this.authService.login(this.username, this.password).subscribe({
+      next: (response) => {
+        if (response.token) {
+          this.authService.setToken(response.token);
+          
+          // Vérifiez que les données de compte et modules sont présentes avant de les stocker
+          if (response.compte) {
+            this.authService.setCompte(response.compte);
           }
-        );
+          
+          if (response.modules) {
+            this.authService.setModules(response.modules);
+          }
+          
+          this.router.navigate(['/compte']);
+        }
       },
-      error => {
-        console.error('Erreur lors de la connexion :', error);
+      error: (error) => {
+        console.log(error);
       }
-    );
+    });
+  
   }
+  register(): void {
+    this.authService.register(this.newUsername, this.newPassword).subscribe((registered) => {
+      if (registered) {
+        // Rediriger vers la page de connexion après l'inscription réussie
+        this.router.navigate(['/login']);
+      } else {
+        // Gérer l'échec de l'inscription
+      }
+    });
+  }
+
 }

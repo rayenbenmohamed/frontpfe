@@ -16,6 +16,7 @@ import { AuthGuard } from './auth.guard';
 import { ModulesComponent } from './modules/modules.component';
 import { FormationComponent } from './formation/formation.component';
 import { CategorieComponent } from './categorie/categorie.component';
+import { CompteComponent } from './compte/compte.component';
 
 
 const routes: Routes = [
@@ -27,6 +28,7 @@ const routes: Routes = [
   { path: 'testimonial', component:TestimonialComponent },
   { path: 'team', component:TeamComponent },
  { path: 'login', component:LoginComponent},
+ { path: 'compte', component:CompteComponent},
 
  { path: 'modules', component: ModulesComponent },
  { path: 'formation', component: FormationComponent },

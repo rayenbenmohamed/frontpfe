@@ -1,20 +1,25 @@
-<div class="container">
-  <div class="row">
-    <div class="col-md-6 offset-md-3">
-      <h2>Login</h2>
-      <form (ngSubmit)="login(username.value, password.value); $event.preventDefault()">
+<div class="form-group">
+  <label for="username">Nom d'utilisateur</label>
+  <input type="text" id="username" name="username" [(ngModel)]="username">
+</div>
+<div class="form-group">
+  <label for="password">Mot de passe</label>
+  <input type="password" id="password" name="password" [(ngModel)]="password">
+</div>
+<div class="form-group">
+  <button (click)="login()">Se connecter</button>
+</div>
 
-        <div class="form-group">
-          <label for="username">Username</label>
-          <input type="text" id="username" class="form-control" #username required>
-        </div>
-        <div class="form-group">
-          <label for="password">Password</label>
-          <input type="password" id="password" class="form-control" #password required>
-        </div>
-        <button type="submit" class="btn btn-primary" >Login</button>
 
-      </form>
-    </div>
-  </div>
+<div class="form-group">
+  <h2>Inscription</h2>
+  <label for="newUsername">Nouveau nom d'utilisateur</label>
+  <input type="text" id="newUsername" name="newUsername" [(ngModel)]="newUsername">
+</div>
+<div class="form-group">
+  <label for="newPassword">Nouveau mot de passe</label>
+  <input type="password" id="newPassword" name="newPassword" [(ngModel)]="newPassword">
+</div>
+<div class="form-group">
+  <button (click)="register()">S'inscrire</button>
 </div>
